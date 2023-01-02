@@ -61,6 +61,30 @@ class App extends Component {
     }));
   };
 
+  // componentDidMount для ДЗ 3
+  // Не робити стрілковою функцією!
+  // Викликається одного разу при маунті!
+  componentDidMount() {
+    // Зчитує при Mount localStorage, парсить його у масив і записує у state
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+
+    // Перевіряє наявість даних у localStorage і при наявності записує у state
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
+  // componentDidUpdate для ДЗ 3
+  // Не робити стрілковою функцією!
+  // Викликається після кожного оновлення!
+  componentDidUpdate(prevState) {
+    // Порівнює state і якщо не рівні - записує у localStorage
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
     const { filter } = this.state;
     const filteredResults = this.filterContacts();
